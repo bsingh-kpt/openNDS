@@ -14,7 +14,7 @@ jobs:
           command: bash ./resources/build_libmicrohttpd.sh --compile
       - run:
           name: Build
-          command: make CFLAGS="-I/tmp/libmicrohttpd_install/include" LDFLAGS="-L/tmp/libmicrohttpd_install/lib"
+          command: make CFLAGS="-I/tmp/libmicrohttpd_install/include" LDFLAGS="-L/tmp/libmicrohttpd_install/lib" | tee buildlog.txt
       - store_test_results:
           path: buildlog.txt
   deploy:
