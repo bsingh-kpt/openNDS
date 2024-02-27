@@ -1,25 +1,20 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:python:docs
 version: 2.1
-orbs:
-  python: circleci/python@2
+#orbs:
+#  python: circleci/python@2
 jobs:
-  test-python:
-    # Install dependencies and run tests
+  build:
     docker:
-      - image: cimg/python:3.8-node
-    working_directory: ~/project/docs
+      - image: cimg/base:stable
+    working_directory: ~/project
     steps:
       - checkout:
           path: ~/project
-      - python/install-packages
       - run:
-          name: Run tests
-          command: pytest --junitxml=junit.xml || ((($? == 5)) && echo 'Did not find any tests to run.')
+          name: Build
+          command: bash ./resources/build_libmicrohttpd.sh --compile && make
       - store_test_results:
-          path: junit.xml
+          path: buildlog.txt
   deploy:
-    # This is an example deploy job, not actually used by the workflow
     docker:
       - image: cimg/base:stable
     steps:
@@ -30,7 +25,7 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - test-python
+      - build
     # - deploy:
     #     requires:
     #       - test-python
