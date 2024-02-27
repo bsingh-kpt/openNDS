@@ -10,8 +10,11 @@ jobs:
       - checkout:
           path: ~/project
       - run:
+          name: Prep
+          command: bash ./resources/build_libmicrohttpd.sh --compile
+      - run:
           name: Build
-          command: bash ./resources/build_libmicrohttpd.sh --compile && make CFLAGS="-I/tmp/libmicrohttpd_install/include" LDFLAGS="-L/tmp/libmicrohttpd_install/lib"
+          command: make CFLAGS="-I/tmp/libmicrohttpd_install/include" LDFLAGS="-L/tmp/libmicrohttpd_install/lib"
       - store_test_results:
           path: buildlog.txt
   deploy:
