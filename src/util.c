@@ -52,9 +52,14 @@
 #include <util.h>
 #endif
 
-#ifdef __linux__
+#if defined(__linux__)
 #include <netinet/in.h>
 #include <net/if.h>
+#endif
+
+#ifdef __FreeBSD__
+#include <signal.h>
+#include <sys/signal.h>
 #endif
 
 #include <string.h>

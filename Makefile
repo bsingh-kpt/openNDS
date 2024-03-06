@@ -4,7 +4,7 @@ CFLAGS+=-O2 -g -Wall
 CFLAGS+=-Isrc
 #CFLAGS+=-Wall -Wwrite-strings -pedantic -std=gnu99
 LDFLAGS+=-pthread
-LDLIBS=-lmicrohttpd -lpthread
+LDLIBS=-Wl,-Bstatic -lepoll-shim -lmicrohttpd -Wl,-Bdynamic -lgnutls -lpthread
 
 STRIP=yes
 
@@ -20,10 +20,10 @@ all: opennds ndsctl
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 opennds: $(NDS_OBJS) $(LIBHTTPD_OBJS)
-	$(CC) $(LDFLAGS) -o opennds $+ $(LDLIBS)
+	$(CC) $(LDFLAGS) -o opennds $(NDS_OBJS) $(LDLIBS)
 
 ndsctl: src/ndsctl.o
-	$(CC) $(LDFLAGS) -o ndsctl $+ $(LDLIBS)
+	$(CC) $(LDFLAGS) -o ndsctl src/ndsctl.o $(LDLIBS)
 
 clean:
 	rm -f opennds ndsctl src/*.o

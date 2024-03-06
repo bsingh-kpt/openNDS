@@ -35,6 +35,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#ifdef __FreeBSD__
+#include <sys/stat.h>
+#endif
 #include <fcntl.h>
 #include <unistd.h>
 #include <syslog.h>
