@@ -1,10 +1,19 @@
 
+PLATFORM?=LINUX
+ifneq ($(OS),Windows_NT)
+PLATFORM=$(shell uname -s)
+endif
+
 CC?=gcc
 CFLAGS+=-O2 -g -Wall
 CFLAGS+=-Isrc
 #CFLAGS+=-Wall -Wwrite-strings -pedantic -std=gnu99
 LDFLAGS+=-pthread
-LDLIBS=-Wl,-Bstatic -lepoll-shim -lmicrohttpd -Wl,-Bdynamic -lgnutls -lpthread
+LDLIBS=-Wl,-Bstatic -lmicrohttpd
+ifeq ($(PLATFORM),FreeBSD)
+LDLIBS+=-lepoll-shim
+endif
+LDLIBS+=-Wl,-Bdynamic -lgnutls -lpthread
 
 STRIP=yes
 
