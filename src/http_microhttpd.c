@@ -26,7 +26,13 @@
 #include <stdint.h>
 #include <string.h>
 #include <pthread.h>
+#ifdef __FreeBSD__
+#include <limits.h>
+#include <sys/syslimits.h>
+#include <netinet/in.h>
+#else
 #include <linux/limits.h>
+#endif
 #include <fcntl.h>
 #include <unistd.h>
 

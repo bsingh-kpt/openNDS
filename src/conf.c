@@ -37,7 +37,13 @@
 #include <ctype.h>
 #include <sys/stat.h>
 #include <arpa/inet.h>
+#ifdef __FreeBSD__
+#include <sys/socket.h>
+#include <netinet/if_ether.h>
+#include <netinet/in.h>
+#else
 #include <netinet/ether.h>
+#endif
 
 #include "common.h"
 #include "safe.h"
